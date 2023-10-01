@@ -64,6 +64,12 @@ def product_detail(request, category_slug, product_slug):
     
     # get the product gallery 
     product_gallery = ProductGallery.objects.filter(product_id=single_product.id)
+    
+    # for feature and specification 
+    product = get_object_or_404(Product, category__slug=category_slug, slug=product_slug)
+    features_list = [feature.strip() for feature in product.features.split('\n') if feature.strip()]
+    specification_list = [spec.strip() for spec in product.specification.split('\n') if spec.strip()]
+    shipping_option_list = [option.strip() for option in product.shipping_option.split('\n') if option.strip()]
         
     
     context = {
@@ -72,6 +78,9 @@ def product_detail(request, category_slug, product_slug):
         'orderproduct':orderproduct,
         'reviews':reviews,
         'product_gallery':product_gallery,
+        'features_list':features_list,
+        'specification_list':specification_list,
+        'shipping_option_list':shipping_option_list,
     }
     return render(request, 'store/product_detail.html', context)
 

@@ -24,6 +24,11 @@ class Product(models.Model):
     banner_image = models.ImageField(upload_to='banner/banners', blank=True)
     banner_description = models.TextField(max_length=200, blank=True)
     discount = models.IntegerField(default=0)
+    
+    # for single produt 
+    features = models.TextField(max_length=700, blank=True)
+    specification = models.TextField(max_length=700, blank=True)
+    shipping_option = models.TextField(max_length=700, blank=True)
 
     def get_url(self):
         return reverse('product_detail', args=[self.category.slug, self.slug])
