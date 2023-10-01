@@ -1,0 +1,254 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<!-- new store setup  -->
+
+   <!-- Start Breadcrumbs -->
+   <div class="breadcrumbs">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="breadcrumbs-content">
+                  {% if 'search' in request.path %}
+                    <h1 class="page-title">Search Result</h1>
+                  {% else %}
+                    <h1 class="page-title">Store</h1>
+                  {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-12">
+                <ul class="breadcrumb-nav">
+                    <li><a href="{% url 'home' %}"><i class="lni lni-home"></i> Home</a></li>
+                    <li><a href="{% url 'store' %}">Shop</a></li>
+                    <li>Products</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Breadcrumbs -->
+
+<!-- Start Product Grids -->
+<section class="product-grids section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-12">
+                <!-- Start Product Sidebar -->
+                <div class="product-sidebar">
+                    <!-- Start Single Widget -->
+                    <div class="single-widget search">
+                        <h3>Search Product</h3>
+                        <form action="{% url 'search' %}" method="GET">
+                            <input type="text" placeholder="Search Here..." name="keyword">
+                            <button type="submit"><i class="lni lni-search-alt"></i></button>
+                        </form>
+                    </div>
+                    <!-- End Single Widget -->
+                    <!-- Start Single Widget -->
+                    <div class="single-widget">
+                        <h3>All Categories</h3>
+                        <ul class="list">
+                            <li>
+                                <a href="{% url 'store' %}">All Products </a>
+                            </li>
+                            {% for category in links %}
+                              <li>
+                                  <a href="{{category.get_url}}">{{category.category_name}}</a>
+                              </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <!-- End Single Widget -->
+                    <!-- Start Single Widget -->
+                    <div class="single-widget range">
+                        <h3>Price Range</h3>
+                        <input type="range" class="form-range" name="range" step="1" min="100" max="10000"
+                            value="10" onchange="rangePrimary.value=value">
+                        <div class="range-inner">
+                            <label>$</label>
+                            <input type="text" id="rangePrimary" placeholder="100" />
+                        </div>
+                    </div>
+                    <!-- End Single Widget -->
+                    <!-- Start Single Widget -->
+                    <div class="single-widget condition">
+                        <h3>Filter by Price</h3>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+                            <label class="form-check-label" for="flexCheckDefault1">
+                                $50 - $100L (208)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+                            <label class="form-check-label" for="flexCheckDefault2">
+                                $100L - $500 (311)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
+                            <label class="form-check-label" for="flexCheckDefault3">
+                                $500 - $1,000 (485)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault4">
+                            <label class="form-check-label" for="flexCheckDefault4">
+                                $1,000 - $5,000 (213)
+                            </label>
+                        </div>
+                    </div>
+                    <!-- End Single Widget -->
+                    <!-- Start Single Widget -->
+                    <div class="single-widget condition">
+                        <h3>Filter by Brand</h3>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault11">
+                            <label class="form-check-label" for="flexCheckDefault11">
+                                Apple (254)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault22">
+                            <label class="form-check-label" for="flexCheckDefault22">
+                                Bosh (39)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault33">
+                            <label class="form-check-label" for="flexCheckDefault33">
+                                Canon Inc. (128)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault44">
+                            <label class="form-check-label" for="flexCheckDefault44">
+                                Dell (310)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault55">
+                            <label class="form-check-label" for="flexCheckDefault55">
+                                Hewlett-Packard (42)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault66">
+                            <label class="form-check-label" for="flexCheckDefault66">
+                                Hitachi (217)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault77">
+                            <label class="form-check-label" for="flexCheckDefault77">
+                                LG Electronics (310)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault88">
+                            <label class="form-check-label" for="flexCheckDefault88">
+                                Panasonic (74)
+                            </label>
+                        </div>
+                    </div>
+                    <!-- End Single Widget -->
+                </div>
+                <!-- End Product Sidebar -->
+            </div>
+            <div class="col-lg-9 col-12">
+                <div class="product-grids-head">
+                    <div class="product-grid-topbar">
+                      <div class="row align-items-center">
+                            
+                        <div class="product-sorting">
+                            <h3 class="total-show-product"><span><b>{{product_count}}</b> items found</span></h3>
+                        </div>
+                        
+                      </div>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-grid" role="tabpanel"
+                            aria-labelledby="nav-grid-tab">
+
+                            <div class="row">
+
+                            {% if products %}
+                              {% for product in products %}
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <!-- Start Single Product -->
+                                    <div class="single-product">
+                                        <div class="product-image">
+                                            <img src="{{product.image.url}}" alt="product image">
+                                            <div class="button">
+                                                <a href="{{product.get_url}}" class="btn"><i
+                                                        class="lni lni-cart"></i> Add to Cart</a>
+                                            </div>
+                                        </div>
+                                        <div class="product-info">
+                                            <span class="category">{{product.product_name}}</span>
+                                            <h4 class="title">
+                                                <a href="{{product.get_url}}">{{product.product_name}}</a>
+                                            </h4>
+                                            <div class="rating-star">
+                                              <span>
+                                                <i class="fa fa-star{% if product.averageReview < 0.5 %}-o{% elif product.averageReview >= 0.5 and product.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                <i class="fa fa-star{% if product.averageReview < 1.5 %}-o{% elif product.averageReview >= 1.5 and product.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                <i class="fa fa-star{% if product.averageReview < 2.5 %}-o{% elif product.averageReview >= 2.5 and product.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                <i class="fa fa-star{% if product.averageReview < 3.5 %}-o{% elif product.averageReview >= 3.5 and product.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                <i class="fa fa-star{% if product.averageReview < 4.5 %}-o{% elif product.averageReview >= 4.5 and product.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                                </span> <span>{{product.countReview}} reviews</span>
+                                            </div>
+                                            <div class="price">
+                                                <span>${{product.price}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Single Product -->
+                                </div>
+                                {% endfor %}
+                                {% else %}
+                                <div class="alert alert-danger container-fluid text-center" role="alert">
+                                  No relevant result regarding your search! Try Again.
+                                {% endif %}
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <!-- Pagination -->
+                                    <div class="pagination left">
+                                      {% if products.has_other_pages %}
+                                        <ul class="pagination-list">
+                                          {% if products.has_previous %}
+                                            <li><a href="?page={{products.previous_page_number}}">Previous</a></li>
+                                          {% else %}
+                                            <li class="disabled"><a href="#">Previous</a></li>
+                                          {% endif %}
+                                          {% for i in products.paginator.page_range %} 
+                                          {% if products.number == i %}
+                                            <li class="active"><a href="#">{{i}}</a></li>
+                                          {% else %}
+                                            <li><a href="?page={{i}}">{{i}}</a></li>
+                                          {% endif %}
+                                          {% endfor %}
+                                          {% if products.has_next %}
+                                            <li><a href="?page={{products.next_page_number}}"><i
+                                              class="lni lni-chevron-right"></i></a></li>
+                                          {% else %}
+                                            <li class="disabled"><a href="#"><i
+                                              class="lni lni-chevron-right"></i></a></li>
+                                          {% endif %}
+                                        </ul>
+                                      {% endif %}
+                                    </div>
+                                    <!--/ End Pagination -->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Product Grids -->
+
+{% endblock content %}

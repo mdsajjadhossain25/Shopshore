@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <!-- Start Hero Area -->
+    <section class="hero-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-12 custom-padding-right">
+                    <div class="slider-head">
+                        <!-- Start Hero Slider -->
+                        <div class="hero-slider">
+                            {% for banner_product in banner_products %}
+                            <!-- Start Single Slider -->
+                            <div class="single-slider"
+                                style="background-image: url('{{banner_product.banner_image.url}}');">
+                                <div class="content">
+                                    <h2><span>No restocking fee ({{banner_product.discount}}% savings)</span>
+                                        {{banner_product.product_name}}
+                                    </h2>
+                                    <p>{{banner_product.banner_description}}</p>
+                                    <h3><span>Now Only</span> ${{banner_product.price}}</h3>
+                                    <div class="button">
+                                        <a href="{{banner_product.get_url}}" class="btn">Shop Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Single Slider -->
+                            {% endfor %}
+
+                        </div>
+                        <!-- End Hero Slider -->
+                    </div>
+                </div>
+                <div class="col-lg-4 col-12">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-6 col-12 md-custom-padding">
+                            <!-- Start Small Banner -->
+                            {% for promotion in promotion_banner %}
+                            <div class="hero-small-banner"
+                                style="background-image: url('{{promotion.img.url}}');">
+                                <div class="content">
+                                    <h2>
+                                        <span>New line required</span>
+                                        {{promotion.promotion_name}}
+                                    </h2>
+                                    <h3>${{promotion.price}}</h3>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <!-- End Small Banner -->
+                        </div>
+                        <div class="col-lg-12 col-md-6 col-12">
+                            <!-- Start Small Banner -->
+                            <div class="hero-small-banner style2">
+                                <div class="content">
+                                    <h2>Weekly Sale!</h2>
+                                    <p>Saving up to 50% off all online store items this week.</p>
+                                    <div class="button">
+                                        <a class="btn" href="{% url 'store' %}">Shop Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Start Small Banner -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Hero Area -->
+
+
+
+  <!-- Start Trending Product Area -->
+  <section class="trending-product section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title">
+                    <h2>Trending Product</h2>
+                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have
+                        suffered alteration in some form.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+          {% for product in products %}
+            <div class="col-lg-3 col-md-6 col-12">
+                <!-- Start Single Product -->
+                <div class="single-product">
+                    <div class="product-image">
+                        <img src="{{product.image.url}}" alt="product image">
+                        <div class="button">
+                            <a href="{{product.get_url}}" class="btn"><i class="fa fa-eye" aria-hidden="true"></i> View Item</a>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <span class="category">{{product.product_name}}</span>
+                        <h4 class="title">
+                            <a href="product-grids.html">{{product.product_name}}</a>
+                        </h4>
+                        <div class="rating-star">
+                          <span>
+                            <i class="fa fa-star{% if product.averageReview < 0.5 %}-o{% elif product.averageReview >= 0.5 and product.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                            <i class="fa fa-star{% if product.averageReview < 1.5 %}-o{% elif product.averageReview >= 1.5 and product.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                            <i class="fa fa-star{% if product.averageReview < 2.5 %}-o{% elif product.averageReview >= 2.5 and product.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                            <i class="fa fa-star{% if product.averageReview < 3.5 %}-o{% elif product.averageReview >= 3.5 and product.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                            <i class="fa fa-star{% if product.averageReview < 4.5 %}-o{% elif product.averageReview >= 4.5 and product.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        <div class="price">
+                            <span>${{product.price}}</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Single Product -->
+            </div>
+          {% endfor %}
+        </div>
+    </div>
+  </section>
+  <!-- End Trending Product Area -->
+
+     <!-- Start Banner Area -->
+     <section class="banner section">
+        <div class="container">
+            <div class="row">
+                {% for banner_product in banner_products %}
+                {% if forloop.counter <= 2 %}
+                <div class="col-lg-6 col-md-6 col-12">
+                    <div class="single-banner" style="background-image:url('{{banner_product.banner_image.url}}')">
+                        <div class="content">
+                            <h2>{{banner_product.product_name}}</h2>
+                            <p>{{banner_product.banner_description}} </p>
+                            <div class="button">
+                                <a href="{{banner_product.get_url}}" class="btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+
+        <!-- Start Shipping Info -->
+        <section class="shipping-info">
+            <div class="container">
+                <ul>
+                    <!-- Free Shipping -->
+                    <li>
+                        <div class="media-icon">
+                            <i class="lni lni-delivery"></i>
+                        </div>
+                        <div class="media-body">
+                            <h5>Free Shipping</h5>
+                            <span>On order over $99</span>
+                        </div>
+                    </li>
+                    <!-- Money Return -->
+                    <li>
+                        <div class="media-icon">
+                            <i class="lni lni-support"></i>
+                        </div>
+                        <div class="media-body">
+                            <h5>24/7 Support.</h5>
+                            <span>Live Chat Or Call.</span>
+                        </div>
+                    </li>
+                    <!-- Support 24/7 -->
+                    <li>
+                        <div class="media-icon">
+                            <i class="lni lni-credit-cards"></i>
+                        </div>
+                        <div class="media-body">
+                            <h5>Online Payment.</h5>
+                            <span>Secure Payment Services.</span>
+                        </div>
+                    </li>
+                    <!-- Safe Payment -->
+                    <li>
+                        <div class="media-icon">
+                            <i class="lni lni-reload"></i>
+                        </div>
+                        <div class="media-body">
+                            <h5>Easy Return.</h5>
+                            <span>Hassle Free Shopping.</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <!-- End Shipping Info -->
+
+{% endblock content %}
