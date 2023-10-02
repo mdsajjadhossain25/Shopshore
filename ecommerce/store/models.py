@@ -29,6 +29,8 @@ class Product(models.Model):
     features = models.TextField(max_length=700, blank=True)
     specification = models.TextField(max_length=700, blank=True)
     shipping_option = models.TextField(max_length=700, blank=True)
+    
+    shipping_fee = models.IntegerField(blank=True, default=0)
 
     def get_url(self):
         return reverse('product_detail', args=[self.category.slug, self.slug])

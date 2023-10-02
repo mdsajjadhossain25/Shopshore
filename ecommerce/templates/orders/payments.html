@@ -1,134 +1,177 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
-<section class="section-content padding-y bg">
-  <div class="container">
-    <!-- ============================ COMPONENT 1 ================================= -->
-    <h4 class="text-center mb-10">Review Your Order and Make Payment</h4>
-    <div class="row">
-      <aside class="col-lg-8">
-        <div class="card">
-            <h5 class="card-header">Billing Address</h5>
-            <div class="card-body">
-              <p class="card-text mb-0">{{order.full_name}}</p>
-              <p class="card-text mb-0">{{order.full_address}}</p>
-              <p class="card-text mb-0">{{order.city}}, {{order.state}}</p>
-              <p class="card-text mb-0">{{order.country}}</p>
-              <p class="card-text mb-0">{{order.email}}</p>
-              <p class="card-text mb-0">{{order.phone}}</p>
-              {% if order.order_note %}
-                <b>Order Note: </b>{{order.order_note}}
-              {% endif %}
-            </div>
-          </div>
-        <div class="card">
-            <h5 class="card-header">Payment Method</h5>
-            <div class="card-body">
-              <p class="card-text">Paypal</p>
-            </div>
-          </div>
-        <div class="card">
-            <h5 class="card-header">Review Products</h5>
-            <div class="card-body">
-                <table class="table table-borderless table-shopping-cart">
-                    <thead class="text-muted">
-                      <tr class="small text-uppercase">
-                        <th scope="col">Product</th>
-                        <th scope="col" width="120">Quantity</th>
-                        <th scope="col" width="120">Price</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {% for cart_item in cart_items %}
-                      <tr>
-                        <td>
-                          <figure class="itemside align-items-center">
-                            <div class="aside">
-                              <a
-                                href="{{ cart_item.product.get_url }}"
-                                class="title text-dark"
-                              >
-                                <img
-                                  src="{{cart_item.product.image.url}}"
-                                  class="img-sm"
-                              /></a>
-                            </div>
-                            <figcaption class="info">
-                              <a
-                                href="{{ cart_item.product.get_url }}"
-                                class="title text-dark"
-                                >{{cart_item.product.product_name}}</a
-                              >
-                              <p class="text-muted small">
-                                {% if cart_item.variations.all %} 
-                                {% for item in cart_item.variations.all %} 
-                                {{item.variation_category |  capfirst}} : {{item.variation_value | capfirst}} <br />
-                                {% endfor %} {% endif %}
-                              </p>
-                            </figcaption>
-                          </figure>
-                        </td>
-                        <td>
-                            <label for="">{{cart_item.quantity}}</label>
-                        </td>
-                        <td>
-                          <div class="price-wrap">
-                            <var class="price">${{cart_item.sub_total}}</var>
-                            <small class="text-muted">
-                              ${{cart_item.product.price}} each
-                            </small>
-                          </div>
-                          <!-- price-wrap .// -->
-                        </td>
-                      </tr>
-        
-                      {% endfor %}
-                    </tbody>
-                  </table>
-            </div>
-          </div>
-        <!-- card.// -->
-      </aside>
-      <!-- col.// -->
-      <aside class="col-lg-4">
-        <div class="card">
-          <div class="card-body">
-            <dl class="dlist-align">
-              <dt>Total price:</dt>
-              <dd class="text-right">${{total}}</dd>
-            </dl>
-            <dl class="dlist-align">
-              <dt>Tax:</dt>
-              <dd class="text-right">${{tax}}</dd>
-            </dl>
-            <dl class="dlist-align">
-              <dt>Grand Total:</dt>
-              <dd class="text-right text-dark b">
-                <strong>${{grand_total}}</strong>
-              </dd>
-            </dl>
-            <hr />
-            <p class="text-center mb-3">
-              <img
-                src="{% static './images/misc/payments.png' %}"
-                height="26"
-              />
-            </p>
+{% extends 'base.html' %} 
+{% load static %} 
+{% block content %}
 
-            <div id="paypal-button-container">
-							<!-- PayPal Button Will Load -->
-
-						</div>
+    <!-- Start Breadcrumbs -->
+    <div class="breadcrumbs">
+      <div class="container">
+          <div class="row align-items-center">
+              <div class="col-lg-6 col-md-6 col-12">
+                  <div class="breadcrumbs-content">
+                      <h1 class="page-title">Payment</h1>
+                  </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12">
+                  <ul class="breadcrumb-nav">
+                      <li><a href="{% url 'home' %}"><i class="lni lni-home"></i> Home</a></li>
+                      <li><a href="{% url 'store' %}">Shop</a></li>
+                      <li><a href="{% url 'cart' %}">Cart</a></li>
+                      <li>Payment</li>
+                  </ul>
+              </div>
           </div>
-          <!-- card-body.// -->
-        </div>
-        <!-- card.// -->
-      </aside>
-      <!-- col.// -->
-    </div>
-    <!-- row.// -->
-    <!-- ============================ COMPONENT 1 END .// ================================= -->
+      </div>
   </div>
-  <!-- container .//  -->
-</section>
+  <!-- End Breadcrumbs -->
+
+      <!--====== Checkout Form Steps Part Start ======-->
+
+      <section class="checkout-wrapper section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="checkout-steps-form-style-1">
+                        <ul id="accordionExample">
+                            <li>
+                                <h6 class="title" data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                                    aria-expanded="true" aria-controls="collapseThree">Your Personal Details </h6>
+                                <section class="checkout-steps-form-content collapse show" id="collapseThree"
+                                    aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="single-form form-default">
+                                              <b>Name: </b><span class="card-text mb-0">{{order.full_name}}</span> <br>
+                                              <b>Full Address: </b><span class="card-text mb-0">{{order.full_address}}</span> <br>
+                                              <b>City and State: </b><span class="card-text mb-0">{{order.city}}, {{order.state}}</span> <br>
+                                              <b>Country: </b><span class="card-text mb-0">{{order.country}}</span> <br>
+                                              <b>Email: </b><span class="card-text mb-0">{{order.email}}</span> <br>
+                                              <b>Phone: </b><span class="card-text mb-0">{{order.phone}}</span> <br>
+                                              {% if order.order_note %}
+                                                <b>Order Note: </b>{{order.order_note}}
+                                              {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <br>
+                                <section class="checkout-steps-form-content collapse show" id="collapseThree"
+                                    aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                    <h6 class="text-center">Review Your Items</h6>
+                                    <br>
+                                
+                                    <table class="table table-hover">
+                                      <thead>
+                                        <tr>
+                                          <th scope="col">Product</th>
+                                          <th scope="col">Quantity</th>
+                                          <th scope="col">Price</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {% for cart_item in cart_items %}
+                                        <tr>
+                                          <td>
+                                            <figure class="itemside align-items-center">
+                                              <div class="aside">
+                                                <img
+                                                    src="{{cart_item.product.image.url}}"
+                                                    class="img-sm" width="40px" height="40px"/>
+                                                    <p><a href="{{ cart_item.product.get_url }}">{{cart_item.product.product_name}}</a></p>
+                                              </div>
+                                              <figcaption class="info">
+                                                <p class="text-muted small">
+                                                  {% if cart_item.variations.all %} 
+                                                  {% for item in cart_item.variations.all %} 
+                                                  {{item.variation_category |  capfirst}} : {{item.variation_value | capfirst}} <br />
+                                                  {% endfor %} {% endif %}
+                                                </p>
+                                              </figcaption>
+                                            </figure>
+                                          </td>
+                                          <td>
+                                              <label for="">{{cart_item.quantity}}</label>
+                                          </td>
+                                          <td>
+                                            <div class="price-wrap">
+                                              <var class="price">${{cart_item.sub_total}}</var>
+                                              <small class="text-muted">
+                                                ${{cart_item.product.price}} each
+                                              </small>
+                                            </div>
+                                            <!-- price-wrap .// -->
+                                          </td>
+                                        </tr>
+                          
+                                        {% endfor %}
+                                      </tbody>
+                                    </table>                         
+
+
+                                </section>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="checkout-sidebar">
+                        <div class="checkout-sidebar-coupon">
+                            <p>Appy Coupon to get discount!</p>
+                            <form action="#">
+                                <div class="single-form form-default">
+                                    <div class="form-input form">
+                                        <input type="text" placeholder="Coupon Code">
+                                    </div>
+                                    <div class="button">
+                                        <button class="btn">apply</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="checkout-sidebar-price-table mt-30">
+                            <h5 class="title">Pricing Table</h5>
+
+                            <div class="sub-total-price">
+                                <div class="total-price">
+                                    <p class="value">Subotal Price:</p>
+                                    <p class="price">${{product_price}}</p>
+                                </div>
+                                <div class="total-price shipping">
+                                    <p class="value">Shipping:</p>
+                                    <p class="price">${{shipping_fee}}</p>
+                                </div>
+                                <div class="total-price discount">
+                                    <p class="value">Discount:</p>
+                                    <p class="price">${{total_discount}}</p>
+                                </div>
+                                <div class="total-price discount">
+                                    <p class="value">Tax:</p>
+                                    <p class="price">${{tax}}</p>
+                                </div>
+                            </div>
+
+                            <div class="total-payable">
+                                <div class="payable-price">
+                                    <p class="value">Payable Price:</p>
+                                    <p class="price">${{grand_total}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkout-sidebar-price-table mt-30">
+                          <div id="paypal-button-container">
+                            <!-- PayPal Button Will Load -->
+              
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--====== Checkout Form Steps Part Ends ======-->
+
+
 
 <script>
   function getCookie(name) {

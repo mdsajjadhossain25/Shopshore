@@ -85,13 +85,29 @@ def place_order(request, total=0, quantity=0,):
     if cart_count <= 0:
         return redirect('store')
 
-    grand_total = 0
     tax = 0
+    total_discount = 0
+    product_price = 0
+    shipping_fee=0
     for cart_item in cart_items:
-        total += (cart_item.product.price * cart_item.quantity)
+        shipping_fee += cart_item.product.shipping_fee
+        subtotal = cart_item.product.price * cart_item.quantity
+        product_price += subtotal
+        if cart_item.product.discount:
+            # Calculate the discount amount for this item
+            discount_amount = (cart_item.product.discount / 100) * subtotal
+                
+            # Subtract the discount from the subtotal
+            subtotal -= discount_amount
+                
+            # Add the discount amount to the total discount
+            total_discount += discount_amount
+            
+        total += subtotal
         quantity += cart_item.quantity
+            
     tax = (2 * total)/100
-    grand_total = total + tax
+    grand_total = total + tax + shipping_fee
 
     if request.method == 'POST':
         form = OrderForm(request.POST)
@@ -125,10 +141,13 @@ def place_order(request, total=0, quantity=0,):
             order = Order.objects.get(user=current_user, is_ordered=False, order_number=order_number)
             context = {
                 'order':order,
-                'cart_items': cart_items,
                 'total': total,
-                'tax':tax,
+                'cart_items': cart_items,
+                'tax': tax,
                 'grand_total': grand_total,
+                'total_discount':total_discount,
+                'product_price':product_price,
+                'shipping_fee':shipping_fee,
             }
             return render(request, 'orders/payments.html', context)
     else:
