@@ -59,6 +59,9 @@ def register(request):
     context = {
         'form': form,
     }
+    
+    # profile creattion
+    
     return render(request, 'accounts/register.html', context)
 
 
@@ -137,6 +140,7 @@ def activate(request, uidb64, token):
     if user is not None and default_token_generator.check_token(user, token):
         user.is_active = True
         user.save()
+        UserProfile.objects.create(user=user)
         messages.success(request, 'Your account is activated!')
         return redirect('login')
     else:

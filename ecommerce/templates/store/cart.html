@@ -72,7 +72,7 @@
                           <a href="{{ cart_item.product.get_url }}"><img src="{{cart_item.product.image.url}}" alt="product image"></a>
                       </div>
                       <div class="col-lg-4 col-md-3 col-12">
-                          <h5 class="product-name"><a href="product-details.html">
+                          <h5 class="product-name"><a href="{{ cart_item.product.get_url }}">
                             {{cart_item.product.product_name}}</a></h5>
                           <p class="product-des">
                             {% if cart_item.variations.all %} 
