@@ -6,7 +6,6 @@ from django.db.models import Avg, Count
 
 # Create your models here.
 
-
 class Product(models.Model):
     product_name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100, unique=True)
