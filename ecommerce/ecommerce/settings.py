@@ -19,8 +19,8 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['141.148.211.160','hotash.xyz','www.hotash.xyz']
+CSRF_TRUSTED_ORIGINS = ['hotash.xyz','https://hotash.xyz', 'http://hotash.xyz','https://www.hotash.xyz', 'http://www.hotash.xyz'] 
 
 # Application definition
 
@@ -36,13 +36,14 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'store.apps.StoreConfig',
     'carts.apps.CartsConfig',
-    'orders.apps.OrdersConfig'
-    
+    'orders.apps.OrdersConfig',
+    'django_extensions',
+    'whitenoise.runserver_nostatic',    
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -123,14 +124,15 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-# STATIC_ROOT = BASE_DIR/'static'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_ROOT = BASE_DIR/'static'
+#STATIC_ROOT = "/var/www/shopshore/static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 
 
 # media file configuration
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR/'media'
+MEDIA_ROOT = "/home/ploi/hotash.xyz/public/shopshore/ecommerce/media/"
 
 
 # Default primary key field type

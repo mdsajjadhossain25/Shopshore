@@ -180,6 +180,7 @@ def cart(request, total=0, quantity=0, cart_items=None):
         total_discount = 0
         product_price = 0
         shipping_fee=0
+        grand_total=0
         if request.user.is_authenticated:
             cart_items = CartItem.objects.filter(user=request.user, is_active=True)  
         else:   
@@ -229,6 +230,7 @@ def checkout(request, total=0, quantity=0, cart_items=None):
         total_discount = 0
         product_price = 0
         shipping_fee=0
+        grand_total=0
         if request.user.is_authenticated:
             cart_items = CartItem.objects.filter(user=request.user, is_active=True)  
         else:   
