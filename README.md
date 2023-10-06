@@ -86,7 +86,7 @@ Make sure you add the env-sample file required code to avoid error.
 - Marketing and Promotion: Promote featured products to attract customers.
 - Open Source: This project is open-source. Contribute to its development on GitHub.
 ### Contributing
-We welcome contributions to make ShopShore even better! Please refer to our Contribution Guidelines for details on how to get involved.
+We welcome contributions to make ShopShore even better! Please refer to our Contribution Guidelines for details on how to get involved. See CONTRIBUTION.md
 
 
 
